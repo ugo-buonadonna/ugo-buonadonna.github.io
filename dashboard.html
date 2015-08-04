@@ -915,7 +915,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="display">
 									<div class="number">
 										<h3 class="font-red-haze">{{availableTeamMandays}}</h3>
-										<small>TOTAL AVAILABLE MANDAYS</small>
+										<small>TOTAL TEAM MANDAYS</small>
 									</div>
 									<div class="icon hidden">
 										<i class="icon-user"></i>
@@ -1011,6 +1011,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="caption caption-md">
 									<i class="icon-globe theme-font-color hide"></i>
 									<span class="caption-subject theme-font-color bold uppercase">SPRINT BACKLOG</span>
+									<span class="caption-helper">click for details</span>
 								</div>
 								<ul class="nav nav-tabs">
 									<li class="active">
@@ -1037,7 +1038,7 @@ License: You must have a valid license purchased only from themeforest(the above
 																	{{ story.nostro_id }}
 																</div>
 															</div>
-															<a class="cont-col2" ng-click="getStoryTasks(story.id)">
+															<a class="cont-col2" ng-click="getStoryDemoAndTasks(story.id)">
 																<div class="desc">
 																	 {{ story.name }}
 																</div>
@@ -1252,9 +1253,33 @@ License: You must have a valid license purchased only from themeforest(the above
 						<!-- BEGIN PORTLET-->
 						<div class="portlet light tasks-widget">
 							<div class="portlet-title">
+							<div class="caption caption-md">
+								<i class="icon-bar-chart theme-font-color hide"></i>
+								<span class="caption-subject theme-font-color bold uppercase">STORY DEMONSTRATION</span>
+								<span class="caption-helper">for demo day</span>
+							</div>
+							<div class="inputs">
+								<div class="portlet-input input-small input-inline hidden">
+									<div class="input-icon right">
+										<i class="icon-magnifier"></i>
+										<input type="text" class="form-control form-control-solid" placeholder="search...">
+									</div>
+								</div>
+							</div>
+						</div>
+							<div class="portlet-body">
+								<div class="task-content">
+									<div style="height: 2em;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+										<!-- START TASK LIST -->
+										<div class="task-title" style="text-transform:capitalize;"> {{storyDemo}} </div>
+										</div>
+									</div>
+								</div>
+
+							<div class="portlet-title">
 								<div class="caption caption-md">
 									<i class="icon-bar-chart theme-font-color hide"></i>
-									<span class="caption-subject theme-font-color bold uppercase">CLICK ON A STORY TO SEE ITS TASKS</span>
+									<span class="caption-subject theme-font-color bold uppercase">STORY TASKS</span>
 									<span class="caption-helper">{{ tasks.length }} pending</span>
 								</div>
 								<div class="inputs">
@@ -1273,7 +1298,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<!-- START TASK LIST -->
 										<ul class="task-list" ng-repeat="task in tasks">
 											<li>
-												<div class="task-title">
+												<div class="task-title" style="text-transform:capitalize;">
 													<span ng-switch on= "(task.complete === true)" class="task-title-sp">
 														<del ng-switch-when="true">
 														{{ task.description }}</del>

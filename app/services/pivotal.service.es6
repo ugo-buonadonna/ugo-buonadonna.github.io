@@ -105,6 +105,19 @@ app.factory('PivotalTracker', ['$http','$q',
                   .error( (message) => { response.reject(message)})
               return response.promise;
           },
+          getStory: (projectID,storyID) => {
+              let response = $q.defer();
+              $http.get(`https://www.pivotaltracker.com/services/v5/projects/${projectID}/stories/${storyID}`,
+                  {
+                      headers: {
+                          'X-TrackerToken': '222069cee93cc9a8651bb4bcccc2c5d7'
+                      }
+                  })
+                  .success( (story) => {
+                      response.resolve(story)})
+                  .error( (message) => { response.reject(message)})
+              return response.promise;
+          },
 
           getCurrentIterationUserAssignedStories: (projectID,userID) => {
               let response = $q.defer();

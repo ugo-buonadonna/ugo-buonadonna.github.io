@@ -123,6 +123,19 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
             });
             return response.promise;
         },
+        getStory: function getStory(projectID, storyID) {
+            var response = $q.defer();
+            $http.get('https://www.pivotaltracker.com/services/v5/projects/' + projectID + '/stories/' + storyID, {
+                headers: {
+                    'X-TrackerToken': '222069cee93cc9a8651bb4bcccc2c5d7'
+                }
+            }).success(function (story) {
+                response.resolve(story);
+            }).error(function (message) {
+                response.reject(message);
+            });
+            return response.promise;
+        },
 
         getCurrentIterationUserAssignedStories: function getCurrentIterationUserAssignedStories(projectID, userID) {
             var response = $q.defer();
