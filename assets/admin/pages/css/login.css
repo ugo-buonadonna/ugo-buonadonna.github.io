@@ -2,8 +2,14 @@
 Login page
 ***/
 /* bg color */
+/*
 .login {
   background-color: #eceef1 !important;
+}
+*/
+
+.login {
+  background-color: #ffffff !important;
 }
 
 .login .logo {
