@@ -1,7 +1,5 @@
 
 /* jshint -W098 */
-'use strict';
-
 app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', function ($scope, $http, PivotalTracker) {
 
     $http.defaults.useXDomain = true;
@@ -35,41 +33,20 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         $scope.currentIteration = currentIteration;
 
         // Calcolo i manday per ogni categoria ed i mandays totali
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = $scope.currentIterationStories[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var story = _step.value;
-
-                $scope.mandays[story.category] = ($scope.mandays[story.category] || 0) + story.mandays;
-                $scope.sprintVelocity = ($scope.sprintVelocity || 0) + story.mandays;
-            }
-
-            /*
-             * anche qui credo che ci sia un errore in quanto se si prova a stampare
-             * le due liste, dovrebbe ridare le storie che si stanno facendo ora
-             * invece ritorna delle storie random, tipo bitcoin events che non si sta
-             * facendo ora, secondo pivotal
-             *
-            console.log("currentIteration " + currentIteration[0] + "\n" +
-                "currentIterationStories " + $scope.currentIterationStories[2].name );
-                */
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator['return']) {
-                    _iterator['return']();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
+        for(let story of $scope.currentIterationStories) {
+            $scope.mandays[story.category] = ($scope.mandays[story.category] || 0 ) + story.mandays;
+            $scope.sprintVelocity =  ($scope.sprintVelocity || 0) + story.mandays
         }
+
+        /*
+         * anche qui credo che ci sia un errore in quanto se si prova a stampare
+         * le due liste, dovrebbe ridare le storie che si stanno facendo ora
+         * invece ritorna delle storie random, tipo bitcoin events che non si sta
+         * facendo ora, secondo pivotal
+         *
+        console.log("currentIteration " + currentIteration[0] + "\n" +
+            "currentIterationStories " + $scope.currentIterationStories[2].name );
+            */
     });
 
     PivotalTracker.getCurrentIterationUserAssignedStories($scope.projectID, $scope.ugoID).then(function (stories) {
@@ -106,11 +83,18 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         return PivotalTracker.getRemainingMandays(demoDay, teamMembers);
     };
 
-    $scope.remainingMandays = $scope.getRemainingMandays($scope.nextDemoDay, $scope.teamMembers);
+    $scope.remainingMandays = $scope.getRemainingMandays($scope.nextDemoDay,$scope.teamMembers);
 
     $scope.getColorFromCategory = function (category) {
-        if (category.indexOf('business') > -1) return 'background:blue';else if (category.indexOf('software') > -1) return 'background:yellow';else if (category.indexOf('design') > -1) return 'background:black';else if (category.indexOf('marketing') > -1) return 'background:red';else return '';
-    };
+        if(category.indexOf("business") > -1)
+            return 'background:blue';
+        else if(category.indexOf("software") > -1)
+            return 'background:yellow';
+        else if(category.indexOf("design") > -1)
+            return 'background:black';
+        else if(category.indexOf("marketing") > -1)
+            return 'background:red';
+        else
+            return '';
+    }
 }]);
-
-//# sourceMappingURL=pivotal.controller.js.map

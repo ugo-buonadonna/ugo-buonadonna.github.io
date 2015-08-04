@@ -15,7 +15,6 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
              }
              return story;
             })*/
-            console.log();
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;

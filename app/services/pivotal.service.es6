@@ -16,7 +16,6 @@ app.factory('PivotalTracker', ['$http','$q',
             }
             return story;
         })*/
-console.log();
             for( let label of story.labels) {
                 if (label.name.indexOf('m:') > -1)
                     story.mandays = parseFloat(label.name.substring(2));
