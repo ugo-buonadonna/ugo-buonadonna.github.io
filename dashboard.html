@@ -886,7 +886,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="dashboard-stat2">
 								<div class="display">
 									<div class="number">
-										<h3 class="font-green-sharp">{{ allStories.length }}</h3>
+										<h3 class="font-green-sharp">{{ currentIterationStories.length }}</h3>
 										<small>TOTAL <br> STORIES </small>
 									</div>
 									<div class="icon hidden">
@@ -915,7 +915,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="display">
 									<div class="number">
 										<h3 class="font-red-haze">{{availableTeamMandays}}</h3>
-										<small>TOTAL MANDAYS</small>
+										<small>TOTAL AVAILABLE MANDAYS</small>
 									</div>
 									<div class="icon hidden">
 										<i class="icon-user"></i>
@@ -942,8 +942,8 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="dashboard-stat2">
 								<div class="display">
 									<div class="number">
-										<h3 class="font-purple-soft">0</h3>
-										<small>TASK COMPLETED</small>
+										<h3 class="font-purple-soft">{{currentIterationStories.completed.length}}</h3>
+										<small>STORIES COMPLETED</small>
 									</div>
 									<div class="icon hidden">
 										<i class="icon-like"></i>
@@ -1242,7 +1242,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						</div>
 						<!-- END PORTLET-->
 					</div>
-					<!-- FINE MEMBER ACTIVITY --> 
+					<!-- FINE ATIVITY -->
 				</div>
 
 				<div class="row">

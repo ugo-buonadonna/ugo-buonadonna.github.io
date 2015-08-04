@@ -46,11 +46,28 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     PivotalTracker.getCurrentIteration($scope.projectID).then(function (currentIteration) {
         $scope.currentIterationStories = currentIteration.stories;
         $scope.currentIteration = currentIteration;
+        $scope.currentIterationStories.completed = [];
+        $scope.currentIterationStories.notCompleted = [];
 
-        // Calcolo i manday per ogni categoria ed i mandays totali
+
         for(let story of $scope.currentIterationStories) {
+            // Calcolo i manday per ogni categoria ed i mandays totali
             $scope.mandays[story.category] = ($scope.mandays[story.category] || 0 ) + story.mandays;
             $scope.sprintVelocity =  ($scope.sprintVelocity || 0) + story.mandays
+
+            // Aggiungo le storie a seconda del loro stato
+            switch(story.current_state) {
+                case 'accepted':
+                case 'delivered':
+                case 'finished':
+                    $scope.currentIterationStories.completed.push(story);
+                    break;
+                default:
+                    $scope.currentIterationStories.notCompleted.push(story);
+                    break;
+            }
+
+
         }
 
         /*
