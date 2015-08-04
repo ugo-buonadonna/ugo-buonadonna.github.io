@@ -4,14 +4,22 @@
 
 app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', function ($scope, $http, PivotalTracker) {
 
+    // DA INSERIRE PER OGNI NUOVA ITERAZIONE
+    // -------------------------------------
+    $scope.nextDemoDay = new Date('08/13/2015');
+    $scope.teamMembers = 3;
+    $scope.ugoMandays = 7;
+    $scope.andreaMandays = 6.5;
+    $scope.davideMandays = 7;
+    // -------------------------------------
+
     $http.defaults.useXDomain = true;
     $scope.projectID = 1398148; //Passparyou project id hardcoded
     $scope.andreaID = 1748762;
     $scope.davideID = 1748768;
     $scope.ugoID = 1748750;
-    $scope.nextDemoDay = new Date('08/13/2015');
-    $scope.teamMembers = 3; //per ora
     $scope.mandays = {};
+    $scope.availableTeamMandays = $scope.ugoMandays + $scope.andreaMandays + $scope.davideMandays;
 
     $scope['package'] = {
         name: 'pivotal-tracker'
