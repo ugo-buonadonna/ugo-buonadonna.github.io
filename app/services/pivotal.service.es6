@@ -6,12 +6,23 @@ app.factory('PivotalTracker', ['$http','$q',
       let addMandaysCategoryToStories = (stories) =>{
         return stories.map( (story) => {
 
-            for( let label of story.labels) {
-                if (label.name.includes('m:'))
+           /* for( let label of story.labels) {
+                if (label.name.indexOf('m:') > -1)
                     story.mandays = parseFloat(label.name.substring(2));
                 if (label.name.includes('c:'))
                     story.category = label.name.substring(2);
                 if (label.name.includes('i:'))
+                    story.nostro_id = label.name.substring(2);
+            }
+            return story;
+        })*/
+console.log();
+            for( let label of story.labels) {
+                if (label.name.indexOf('m:') > -1)
+                    story.mandays = parseFloat(label.name.substring(2));
+                if (label.name.indexOf('c:') > -1)
+                    story.category = label.name.substring(2);
+                if (label.name.indexOf('i:') > -1)
                     story.nostro_id = label.name.substring(2);
             }
             return story;

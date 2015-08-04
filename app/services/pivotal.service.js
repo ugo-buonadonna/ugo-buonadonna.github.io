@@ -4,18 +4,29 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
 
     var addMandaysCategoryToStories = function addMandaysCategoryToStories(stories) {
         return stories.map(function (story) {
+
+            /* for( let label of story.labels) {
+                 if (label.name.indexOf('m:') > -1)
+                     story.mandays = parseFloat(label.name.substring(2));
+                 if (label.name.includes('c:'))
+                     story.category = label.name.substring(2);
+                 if (label.name.includes('i:'))
+                     story.nostro_id = label.name.substring(2);
+             }
+             return story;
+            })*/
+            console.log();
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
-
                 for (var _iterator = story.labels[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var label = _step.value;
 
-                    if (label.name.includes('m:')) story.mandays = parseFloat(label.name.substring(2));
-                    if (label.name.includes('c:')) story.category = label.name.substring(2);
-                    if (label.name.includes('i:')) story.nostro_id = label.name.substring(2);
+                    if (label.name.indexOf('m:') > -1) story.mandays = parseFloat(label.name.substring(2));
+                    if (label.name.indexOf('c:') > -1) story.category = label.name.substring(2);
+                    if (label.name.indexOf('i:') > -1) story.nostro_id = label.name.substring(2);
                 }
             } catch (err) {
                 _didIteratorError = true;
