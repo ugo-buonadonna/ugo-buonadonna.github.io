@@ -25,8 +25,13 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     // TODO: automatizzare con pivotal vedendo quelle attive tra le storie
     // assegnate.
     $scope.currentDavide = "B01";
+    $scope.currentMdDavide = "7";
+
     $scope.currentAndrea = "D03";
+    $scope.currentMdAndrea = "4";
+
     $scope.currentUgo = "B01";
+    $scope.currentMdUgo = "7";
 
     $scope['package'] = {
         name: 'pivotal-tracker'
