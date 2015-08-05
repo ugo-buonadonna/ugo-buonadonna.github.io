@@ -104,9 +104,7 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         /*PivotalTracker.getStoryTasks($scope.projectID, element.target.getAttribute('data-story-id')).then(function (tasks) {
          $scope.tasks = tasks;
          });*/
-        console.log("EJA 1");
         PivotalTracker.getStory($scope.projectID, storyId).then(function (story) {
-            console.log("GOT STORY");
             $scope.storyDemo = story.description;
         });
         PivotalTracker.getStoryTasks($scope.projectID, storyId).then(function (tasks) {

@@ -943,7 +943,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="display">
 									<div class="number">
 										<h3 class="font-purple-soft">{{currentIterationStories.completed.length}}</h3>
-										<small>STORIES COMPLETED</small>
+										<small>COMPLETE STORIES</small>
 									</div>
 									<div class="icon hidden">
 										<i class="icon-like"></i>
@@ -1011,7 +1011,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="caption caption-md">
 									<i class="icon-globe theme-font-color hide"></i>
 									<span class="caption-subject theme-font-color bold uppercase">SPRINT BACKLOG</span>
-									<span class="caption-helper">click for details</span>
+									<span class="caption-helper">click a story for details</span>
 								</div>
 								<ul class="nav nav-tabs">
 									<li class="active">
@@ -1025,12 +1025,61 @@ License: You must have a valid license purchased only from themeforest(the above
 								</ul>
 							</div>
 							<div class="portlet-body">
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_1_1">
+										<div  style="height: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+											<ul class="feeds">
+												<li ng-repeat="story in currentIterationStories.notCompleted">
+													<div class="col1">
+														<div class="cont">
+															<div class="cont-col1">
+																<div class="label label-sm label-success" style={{getColorFromCategory(story.category)}}>
+																	{{ story.nostro_id }}
+																</div>
+															</div>
+															<a class="cont-col2" ng-click="getStoryDemoAndTasks(story.id)">
+																<div class="desc">
+																	{{ story.name }}
+																</div>
+															</a>
+														</div>
+													</div>
+													<div class="col2">
+														<div class="date">
+															{{ story.mandays }}
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								</div>
+
+								<div class="portlet-title tabbable-line">
+									<div class="caption caption-md">
+										<i class="icon-globe theme-font-color hide"></i>
+										<span class="caption-subject theme-font-color bold uppercase">COMPLETED STORIES</span>
+									</div>
+									<ul class="nav nav-tabs">
+										<li class="hidden">
+											<a href="#tab_1_1" data-toggle="tab">
+												Mandays </a>
+										</li>
+										<li class="hidden">
+											<a href="#tab_1_2" data-toggle="tab">
+												Activities </a>
+										</li>
+									</ul>
+								</div>
+								<div class="portlet-body">
+
 								<!--BEGIN TABS-->
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_1_1">
-										<div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+										<div style="height: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
 											<ul class="feeds">
-												<li ng-repeat="story in currentIterationStories">
+												<li ng-repeat="story in currentIterationStories.completed">
 													<div class="col1">
 														<div class="cont">
 															<div class="cont-col1">
@@ -1057,12 +1106,13 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 								<!--END TABS-->
 							</div>
+
 						</div>
 
 
 						<!-- END PORTLET-->
 					</div>
-					<!-- FINE SPRINT BACKLOG --> 
+					<!-- FINE LOG -->
 
 					<!-- MEMBER ACTIVITY -->
 					<div class="col-md-6 col-sm-12">
@@ -1142,7 +1192,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
 										<input type="radio" name="options" class="toggle" id="option1">Today</label>
 										<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
-										<input type="radio" name="options" class="toggle" id="option2">Week</label>
+										<input type="radio" name="options" class="toggle" id="option23">Week</label>
 										<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
 										<input type="radio" name="options" class="toggle" id="option2">Month</label>
 									</div>
@@ -1294,7 +1344,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 							<div class="portlet-body">
 								<div class="task-content">
-									<div class="scroller" style="height: 282px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+									<div style="min-height:100px; height: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
 										<!-- START TASK LIST -->
 										<ul class="task-list" ng-repeat="task in tasks">
 											<li>
