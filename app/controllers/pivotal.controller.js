@@ -30,8 +30,8 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.currentAndrea = "D03";
     $scope.currentMdAndrea = "4";
 
-    $scope.currentUgo = "B01";
-    $scope.currentMdUgo = "7";
+    $scope.currentUgo = "S14";
+    $scope.currentMdUgo = "1";
 
     $scope['package'] = {
         name: 'pivotal-tracker'
