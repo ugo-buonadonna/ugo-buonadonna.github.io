@@ -144,7 +144,7 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.remainingMandays = $scope.getRemainingMandays($scope.nextDemoDay, $scope.teamMembers);
 
     $scope.getColorFromCategory = function (category) {
-        if (category.indexOf('business') > -1) return 'background:blue';else if (category.indexOf('software') > -1) return 'background:yellow';else if (category.indexOf('design') > -1) return 'background:black';else if (category.indexOf('marketing') > -1) return 'background:red';else return '';
+        if (category.indexOf('business') > -1) return 'background:#3B83BD';else if (category.indexOf('software') > -1) return 'background:#F3DA0B';else if (category.indexOf('design') > -1) return 'background:#23282B';else if (category.indexOf('marketing') > -1) return 'background:#CB2821';else return '';
     };
 }]);
 
