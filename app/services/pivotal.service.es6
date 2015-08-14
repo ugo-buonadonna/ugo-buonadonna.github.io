@@ -148,6 +148,9 @@ app.factory('PivotalTracker', ['$http','$q',
               if(now.getHours() > 14 && !saturdayOrSunday)
                   mandaysRemaining -= 0.5;
 
+               if(mandaysRemaining < 0)
+                  mandaysRemaining = 0;
+
               return mandaysRemaining * persons;
 
           }

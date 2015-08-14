@@ -12,9 +12,6 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.davideMandays = 7;
     // -------------------------------------
 
-
-
-
     $http.defaults.useXDomain = true;
     $scope.projectID = 1398148; //Passparyou project id hardcoded
     $scope.andreaID = 1748762;
@@ -23,12 +20,22 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.mandays = {};
     $scope.availableTeamMandays = $scope.ugoMandays + $scope.andreaMandays + $scope.davideMandays;
 
+    // Codici delle storie correnti che il team sta svolgendo
+    // TODO: automatizzare con pivotal vedendo quelle attive tra le storie
+    // assegnate.
+    $scope.currentDavide = "M05";
+    $scope.currentMdDavide = "2.5";
 
+    $scope.currentAndrea = "M05";
+    $scope.currentMdAndrea = "2.5";
 
+    $scope.currentUgo = "M05";
+    $scope.currentMdUgo = "2.5";
 
     $scope['package'] = {
         name: 'pivotal-tracker'
     };
+
 
     // Get all project stories
     PivotalTracker.getAllStories($scope.projectID).then(function (stories) {
@@ -121,15 +128,9 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.remainingMandays = $scope.getRemainingMandays($scope.nextDemoDay,$scope.teamMembers);
 
     $scope.getColorFromCategory = function (category) {
-        if(category.indexOf("business") > -1)
-            return 'background:blue';
-        else if(category.indexOf("software") > -1)
-            return 'background:yellow';
-        else if(category.indexOf("design") > -1)
-            return 'background:black';
-        else if(category.indexOf("marketing") > -1)
-            return 'background:red';
-        else
-            return '';
-    }
+        if (category.indexOf('business') > -1) return 'background:#3B83BD';
+        else if (category.indexOf('software') > -1) return 'background:#F3DA0B';
+        else if (category.indexOf('design') > -1) return 'background:#23282B';
+        else if (category.indexOf('marketing') > -1) return 'background:#CB2821';else return '';
+    };
 }]);
