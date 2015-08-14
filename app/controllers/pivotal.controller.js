@@ -24,14 +24,14 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     // Codici delle storie correnti che il team sta svolgendo
     // TODO: automatizzare con pivotal vedendo quelle attive tra le storie
     // assegnate.
-    $scope.currentDavide = 'M05';
-    $scope.currentMdDavide = '2.5';
+    $scope.currentDavide = '-';
+    $scope.currentMdDavide = '-';
 
-    $scope.currentAndrea = 'M05';
-    $scope.currentMdAndrea = '2.5';
+    $scope.currentAndrea = '-';
+    $scope.currentMdAndrea = '-';
 
-    $scope.currentUgo = 'M05';
-    $scope.currentMdUgo = '2.5';
+    $scope.currentUgo = '-';
+    $scope.currentMdUgo = '-';
 
     $scope['package'] = {
         name: 'pivotal-tracker'
