@@ -46,14 +46,14 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
         });
     };
 
-    var getCurrentIteration = function getCurrentIteration(projectID) {
+    var getNthIteration = function getNthIteration(projectID, n) {
         var response = $q.defer();
         $http.get('https://www.pivotaltracker.com/services/v5/projects/' + projectID + '/iterations', {
             headers: {
                 'X-TrackerToken': '222069cee93cc9a8651bb4bcccc2c5d7'
             }
         }).success(function (iterations) {
-            var currentIteration = iterations[iterations.length - 1];
+            var currentIteration = iterations[n - 1];
             currentIteration.stories = addMandaysCategoryToStories(currentIteration.stories);
             response.resolve(currentIteration);
         }).error(function (message) {
@@ -100,15 +100,13 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
                     x.finish = new Date(x.finish).toDateString();
                     return x;
                 });
-                response.resolve(iterations.filter(function (x) {
-                    return x.length > 0;
-                }));
+                response.resolve(iterations /*.filter(x => x.length>0)*/);
             }).error(function (message) {
                 response.reject(message);
             });
             return response.promise;
         },
-        getCurrentIteration: getCurrentIteration,
+        getNthIteration: getNthIteration,
 
         getStoryTasks: function getStoryTasks(projectID, storyID) {
             var response = $q.defer();
@@ -137,9 +135,9 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
             return response.promise;
         },
 
-        getCurrentIterationUserAssignedStories: function getCurrentIterationUserAssignedStories(projectID, userID) {
+        getNthIterationUserAssignedStories: function getNthIterationUserAssignedStories(projectID, userID, n) {
             var response = $q.defer();
-            getCurrentIteration(projectID).then(function (iteration) {
+            getNthIteration(projectID, n).then(function (iteration) {
                 response.resolve(iteration.stories.filter(function (x) {
                     return x.owner_ids.indexOf(userID) != -1;
                 }));
@@ -148,7 +146,7 @@ app.factory('PivotalTracker', ['$http', '$q', function ($http, $q) {
         },
 
         getRemainingMandays: function getRemainingMandays(demoDay, persons) {
-
+            console.log('demo Day = ' + demoDay);
             // Orario corrente
             var now = new Date();
 

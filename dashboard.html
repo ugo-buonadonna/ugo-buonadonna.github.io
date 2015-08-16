@@ -29,10 +29,8 @@ License: You must have a valid license purchased only from themeforest(the above
 	<link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-	<link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
 	<link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css">
@@ -52,6 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 	<!-- ANGULAR MAIN AND CONTROLLER  --> 
 	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<!-- PLUGIN ANGULAR & STAMPLAY -->
 	<!-- -->
@@ -59,7 +58,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- Metto in tutta l'applicazione una variabile app, senza dover mettere ogni volta -->
     <!-- angular.module -->
     <script type="text/javascript">
-      var app = angular.module('project-board', ['ui.router']);
+      var app = angular.module('project-board', ['ui.router','ui.bootstrap']);
     </script>
 
     <script type="text/javascript" src="app/controllers/dashboard.controller.js"></script>   
@@ -300,8 +299,13 @@ License: You must have a valid license purchased only from themeforest(the above
 				<div class="page-head">
 					<!-- BEGIN PAGE TITLE -->
 					<div class="page-title">
-						<h1>Project board <small>statistics & reports</small></h1>
+						<h1>Project board <small>statistics & reports</small>. Select Sprint: </h1>
 					</div>
+					<!-- BEGIN SPRINT SWITCHER -->
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<pagination direction-links="false" total-items="totalItems" items-per-page="1" ng-model="data.currentPage" ng-change="pageChanged()"></pagination>
+					</div>
+					<!-- END SPRINT SWITCHER -->
 					<!-- END PAGE TITLE -->
 					<!-- BEGIN PAGE TOOLBAR -->
 					<!-- qui ci stava la toolbar -->
@@ -329,7 +333,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									</div>
 								</div>
 								<div class="portlet-body">
-									<h4>Analyze market needs to find right target</h4>
+									<h4>{{sprint[data.currentPage-1].goal}}</h4>
 								</div>
 							</div>
 					</div>
@@ -369,7 +373,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="dashboard-stat2">
 								<div class="display">
 									<div class="number">
-										<h3 class="font-red-haze">{{availableTeamMandays}}</h3>
+										<h3 class="font-red-haze">{{sprint[data.currentPage-1].availableTeamMandays}}</h3>
 										<small>TOTAL TEAM MANDAYS</small>
 									</div>
 									<div class="icon hidden">
@@ -425,7 +429,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="dashboard-stat2">
 								<div class="display">
 									<div class="number">
-										<h3 class="font-blue-sharp">{{remainingMandays}}</h3>
+										<h3 class="font-blue-sharp">{{(sprint[data.currentPage-1].remainingMandays || 0)}}</h3>
 										<small>MANDAYS REMAINING</small>
 									</div>
 									<div class="icon hidden">
@@ -585,7 +589,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<div class="dashboard-stat2">
 										<div class="display">
 											<div class="number">
-												<h3 class="font-green-sharp">{{mandays.marketing}}</h3>
+												<h3 class="font-green-sharp">{{(mandays.marketing || 0)}}</h3>
 												<small>MARKETING</small>
 											</div>
 											<div class="icon hidden">
@@ -598,7 +602,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<div class="dashboard-stat2">
 										<div class="display">
 											<div class="number">
-												<h3 class="font-green-sharp">{{mandays.software}}</h3>
+												<h3 class="font-green-sharp">{{(mandays.software || 0)}}</h3>
 												<small>SOFTWARE</small>
 											</div>
 											<div class="icon hidden">
@@ -611,7 +615,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<div class="dashboard-stat2">
 										<div class="display">
 											<div class="number">
-												<h3 class="font-green-sharp">{{mandays.design}}</h3>
+												<h3 class="font-green-sharp">{{(mandays.design || 0)}}</h3>
 												<small>DESIGN</small>
 											</div>
 											<div class="icon hidden">

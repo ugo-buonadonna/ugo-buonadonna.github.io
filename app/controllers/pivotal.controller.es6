@@ -2,14 +2,32 @@
 /* jshint -W098 */
 app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', function ($scope, $http, PivotalTracker) {
 
-
+    $scope.sprint = [];
+    for (let i of (new Array(20).keys()))
+        $scope.sprint[i] = {};
     // DA INSERIRE PER OGNI NUOVA ITERAZIONE
     // -------------------------------------
-    $scope.nextDemoDay = new Date('08/13/2015');
-    $scope.teamMembers = 3;
-    $scope.ugoMandays = 7;
-    $scope.andreaMandays = 6.5;
-    $scope.davideMandays = 7;
+    $scope.sprint[0].nextDemoDay = new Date('08/13/2015');
+    $scope.sprint[0].teamMembers = 3;
+    $scope.sprint[0].ugoMandays = 7;
+    $scope.sprint[0].andreaMandays = 6.5;
+    $scope.sprint[0].davideMandays = 7;
+    $scope.sprint[0].availableTeamMandays = $scope.sprint[0].ugoMandays + $scope.sprint[0].andreaMandays + $scope.sprint[0].davideMandays;
+    $scope.sprint[0].goal = 'Analyze market needs to find right target';
+    // -------------------------------------
+    $scope.sprint[1].nextDemoDay = new Date('08/27/2015');
+    $scope.sprint[1].teamMembers = 3;
+    $scope.sprint[1].ugoMandays = 7;
+    $scope.sprint[1].andreaMandays = 7;
+    $scope.sprint[1].davideMandays = 7;
+    $scope.sprint[1].availableTeamMandays = $scope.sprint[1].ugoMandays + $scope.sprint[1].andreaMandays + $scope.sprint[1].davideMandays;
+    $scope.sprint[1].goal = 'TBD';
+
+    $scope.data = {};
+    $scope.data.currentPage = 1;         //Inserire il numero di sprint corrente
+
+    //console.log(`AOOO ${ $scope.sprint[$scope.currentPage-1].availableTeamMandays}`)
+
     // -------------------------------------
 
     $http.defaults.useXDomain = true;
@@ -18,52 +36,48 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.davideID = 1748768;
     $scope.ugoID = 1748750;
     $scope.mandays = {};
-    $scope.availableTeamMandays = $scope.ugoMandays + $scope.andreaMandays + $scope.davideMandays;
+
 
     // Codici delle storie correnti che il team sta svolgendo
     // TODO: automatizzare con pivotal vedendo quelle attive tra le storie
     // assegnate.
-    $scope.currentDavide = "-";
-    $scope.currentMdDavide = "-";
-
-    $scope.currentAndrea = "-";
-    $scope.currentMdAndrea = "-";
-
-    $scope.currentUgo = "-";
-    $scope.currentMdUgo = "-";
 
     $scope['package'] = {
         name: 'pivotal-tracker'
     };
 
+    let resetMdays = () => {
+        $scope.currentDavide = "-";
+        $scope.currentMdDavide = "-";
 
-    // Get all project stories
-    PivotalTracker.getAllStories($scope.projectID).then(function (stories) {
-        $scope.allStories = stories;
-    });
+        $scope.currentAndrea = "-";
+        $scope.currentMdAndrea = "-";
 
-    // Get all sprint stories
-    PivotalTracker.getAllIterations($scope.projectID).then(function (iterations) {
-        $scope.allIterations = iterations;
-    });
+        $scope.currentUgo = "-";
+        $scope.currentMdUgo = "-";
+    };
 
-    // Get current sprint
-    // and its stories
-    // and calculates remaining mandays
-    PivotalTracker.getCurrentIteration($scope.projectID).then(function (currentIteration) {
+
+    resetMdays();
+
+
+
+    // Funzione per calcolare tutto ciò di cui si ha bisogno
+    var calculateData = function (currentIteration) {
+        console.log(`Sprint = ${$scope.data.currentPage}`);
+        $scope.mandays = {};
+        $scope.sprintVelocity = 0;
         $scope.currentIterationStories = currentIteration.stories;
         $scope.currentIteration = currentIteration;
         $scope.currentIterationStories.completed = [];
         $scope.currentIterationStories.notCompleted = [];
+        for (let story of $scope.currentIterationStories) {
 
-
-        for(let story of $scope.currentIterationStories) {
             // Calcolo i manday per ogni categoria ed i mandays totali
             $scope.mandays[story.category] = ($scope.mandays[story.category] || 0 ) + story.mandays;
-            $scope.sprintVelocity =  ($scope.sprintVelocity || 0) + story.mandays
-
+            $scope.sprintVelocity = ($scope.sprintVelocity || 0) + story.mandays
             // Aggiungo le storie a seconda del loro stato
-            switch(story.current_state) {
+            switch (story.current_state) {
                 case 'accepted':
                 case 'delivered':
                 case 'finished':
@@ -73,38 +87,74 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
                     $scope.currentIterationStories.notCompleted.push(story);
                     break;
             }
-
-
         }
+    };
 
-        /*
-         * anche qui credo che ci sia un errore in quanto se si prova a stampare
-         * le due liste, dovrebbe ridare le storie che si stanno facendo ora
-         * invece ritorna delle storie random, tipo bitcoin events che non si sta
-         * facendo ora, secondo pivotal
-         *
-        console.log("currentIteration " + currentIteration[0] + "\n" +
-            "currentIterationStories " + $scope.currentIterationStories[2].name );
-            */
+
+    // Get all project stories
+    PivotalTracker.getAllStories($scope.projectID).then(function (stories) {
+        $scope.allStories = stories;
+
+
     });
 
-    PivotalTracker.getCurrentIterationUserAssignedStories($scope.projectID, $scope.ugoID).then(function (stories) {
+    // Get all project iterations
+    PivotalTracker.getAllIterations($scope.projectID).then(function (iterations) {
+        $scope.allIterations = iterations;
+        $scope.totalItems = $scope.allIterations.length;
+        //$scope.currentPage = $scope.totalItems;
+        console.log($scope.allIterations);
+        console.log("wewewewe" + $scope.totalItems + $scope.data.currentPage);
+    });
+
+    // Get nth sprint
+    // and its stories
+    // and calculates remaining mandays
+    PivotalTracker.getNthIteration($scope.projectID,$scope.data.currentPage).then(function (currentIteration) {
+        calculateData(currentIteration);
+    })
+
+
+
+    // Quando si cambia sprint, modifica storie, mandays, quanto manca al demo, dettagli sulla storia /tasks
+    $scope.pageChanged =  () => {
+        PivotalTracker.getNthIteration($scope.projectID,$scope.data.currentPage).then(function (currentIteration) {
+        calculateData(currentIteration);
+    });
+        if($scope.data.currentPage == $scope.allIterations.length ) {
+            $scope.setRemainingMandays($scope.allIterations.length)
+
+            $scope.currentDavide = "tbd";
+            $scope.currentMdDavide = "tbd";
+
+            $scope.currentAndrea = "tbd";
+            $scope.currentMdAndrea = "tbd";
+
+            $scope.currentUgo = "tbd";
+            $scope.currentMdUgo = "tbd";
+        }
+        else
+            resetMdays();
+        $scope.storyDemo = undefined;
+        $scope.tasks = undefined;
+    }
+
+   /* PivotalTracker.getNthIterationUserAssignedStories($scope.projectID, $scope.ugoID,$scope.currentPage).then(function (stories) {
         $scope.storiesUgo = stories;
-    });
-    PivotalTracker.getCurrentIterationUserAssignedStories($scope.projectID, $scope.davideID).then(function (stories) {
+
         $scope.storiesDavide = stories;
+    })
+    PivotalTracker.getNthIterationUserAssignedStories($scope.projectID, $scope.andreaID,$scope.currentPage).then(function (stories) {
+        $scope.storiesUgo = stories;
 
-        /*
-         * credo che ci sia un erroe perche' mi
-         * stampa che devo fare la squeeze page, cosa che deve
-         * fare andrea
-         */
-        //console.log("davide " + stories[0].name);
-    });
+        $scope.storiesDavide = stories;
+    })
+    PivotalTracker.getNthIterationUserAssignedStories($scope.projectID, $scope.davideID,$scope.currentPage).then(function (stories) {
+        $scope.storiesUgo = stories;
 
-    PivotalTracker.getCurrentIterationUserAssignedStories($scope.projectID, $scope.andreaID).then(function (stories) {
-        $scope.storiesAndrea = stories;
-    });
+        $scope.storiesDavide = stories;
+    })*/
+
 
     //Per prendere i task di una storia, vedo l'attibuto 'data-story-id' del bottone premuto
     $scope.getStoryDemoAndTasks = function (storyId) {
@@ -125,7 +175,9 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         return PivotalTracker.getRemainingMandays(demoDay, teamMembers);
     };
 
-    $scope.remainingMandays = $scope.getRemainingMandays($scope.nextDemoDay,$scope.teamMembers);
+    $scope.setRemainingMandays = (sprintNumber) => {
+        $scope.sprint[sprintNumber-1].remainingMandays = $scope.getRemainingMandays($scope.sprint[sprintNumber-1].nextDemoDay,$scope.teamMembers);}
+    //$scope.setRemainingMandays($scope.allIterations.length);
 
     $scope.getColorFromCategory = function (category) {
         if (category.indexOf('business') > -1) return 'background:#3B83BD';

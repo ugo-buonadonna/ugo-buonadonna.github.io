@@ -29,7 +29,7 @@ app.factory('PivotalTracker', ['$http','$q',
       }
 
 
-      let getCurrentIteration = (projectID) => {
+      let getNthIteration = (projectID,n) => {
           let response = $q.defer();
           $http.get(`https://www.pivotaltracker.com/services/v5/projects/${projectID}/iterations`,
               {
@@ -38,7 +38,7 @@ app.factory('PivotalTracker', ['$http','$q',
                   }
               })
               .success( (iterations) => {
-                  let currentIteration = iterations[iterations.length-1];
+                  let currentIteration = iterations[n-1];
                   currentIteration.stories = addMandaysCategoryToStories(currentIteration.stories);
                   response.resolve(currentIteration)})
               .error( (message) => { response.reject(message)})
@@ -85,11 +85,11 @@ app.factory('PivotalTracker', ['$http','$q',
                               x => { x.start = (new Date(x.start)).toDateString();
                               x.finish = (new Date(x.finish)).toDateString();
                               return x;});
-                      response.resolve(iterations.filter(x => x.length>0))})
+                      response.resolve(iterations/*.filter(x => x.length>0)*/)})
                   .error( (message) => { response.reject(message)})
               return response.promise;
           },
-          getCurrentIteration : getCurrentIteration
+          getNthIteration : getNthIteration
           ,
 
           getStoryTasks: (projectID,storyID) => {
@@ -119,16 +119,16 @@ app.factory('PivotalTracker', ['$http','$q',
               return response.promise;
           },
 
-          getCurrentIterationUserAssignedStories: (projectID,userID) => {
+          getNthIterationUserAssignedStories: (projectID,userID,n) => {
               let response = $q.defer();
-              getCurrentIteration(projectID).then( (iteration) => {
+              getNthIteration(projectID,n).then( (iteration) => {
                   response.resolve(iteration.stories.filter( x => (x.owner_ids.indexOf(userID) != -1)))
               })
               return response.promise;
           },
 
            getRemainingMandays : (demoDay,persons) => {
-
+               console.log(`demo Day = ${demoDay}`);
               // Orario corrente
               let now = new Date();
 
