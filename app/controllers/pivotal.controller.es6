@@ -46,6 +46,18 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         name: 'pivotal-tracker'
     };
 
+    let setCurrentTeamStories = () => {
+        $scope.currentDavide = "tbd";
+        $scope.currentMdDavide = "tbd";
+
+        $scope.currentAndrea = "tbd";
+        $scope.currentMdAndrea = "tbd";
+
+        $scope.currentUgo = "tbd";
+        $scope.currentMdUgo = "tbd";
+    };
+
+
     let resetMdays = () => {
         $scope.currentDavide = "-";
         $scope.currentMdDavide = "-";
@@ -56,7 +68,6 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         $scope.currentUgo = "-";
         $scope.currentMdUgo = "-";
     };
-
 
     resetMdays();
 
@@ -122,16 +133,8 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         calculateData(currentIteration);
     });
         if($scope.data.currentPage == $scope.allIterations.length ) {
-            $scope.setRemainingMandays($scope.allIterations.length)
-
-            $scope.currentDavide = "tbd";
-            $scope.currentMdDavide = "tbd";
-
-            $scope.currentAndrea = "tbd";
-            $scope.currentMdAndrea = "tbd";
-
-            $scope.currentUgo = "tbd";
-            $scope.currentMdUgo = "tbd";
+            $scope.setRemainingMandays($scope.allIterations.length);
+            setCurrentTeamStories();
         }
         else
             resetMdays();

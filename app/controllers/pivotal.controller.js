@@ -70,6 +70,17 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         name: 'pivotal-tracker'
     };
 
+    var setCurrentTeamStories = function setCurrentTeamStories() {
+        $scope.currentDavide = 'tbd';
+        $scope.currentMdDavide = 'tbd';
+
+        $scope.currentAndrea = 'tbd';
+        $scope.currentMdAndrea = 'tbd';
+
+        $scope.currentUgo = 'tbd';
+        $scope.currentMdUgo = 'tbd';
+    };
+
     var resetMdays = function resetMdays() {
         $scope.currentDavide = '-';
         $scope.currentMdDavide = '-';
@@ -159,15 +170,7 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
         });
         if ($scope.data.currentPage == $scope.allIterations.length) {
             $scope.setRemainingMandays($scope.allIterations.length);
-
-            $scope.currentDavide = 'tbd';
-            $scope.currentMdDavide = 'tbd';
-
-            $scope.currentAndrea = 'tbd';
-            $scope.currentMdAndrea = 'tbd';
-
-            $scope.currentUgo = 'tbd';
-            $scope.currentMdUgo = 'tbd';
+            setCurrentTeamStories();
         } else resetMdays();
         $scope.storyDemo = undefined;
         $scope.tasks = undefined;
