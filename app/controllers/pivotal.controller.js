@@ -43,10 +43,10 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[1].nextDemoDay = new Date('08/27/2015');
     $scope.sprint[1].teamMembers = 3;
     $scope.sprint[1].ugoMandays = 7;
-    $scope.sprint[1].andreaMandays = 7;
+    $scope.sprint[1].andreaMandays = 6.5;
     $scope.sprint[1].davideMandays = 7;
     $scope.sprint[1].availableTeamMandays = $scope.sprint[1].ugoMandays + $scope.sprint[1].andreaMandays + $scope.sprint[1].davideMandays;
-    $scope.sprint[1].goal = 'TBD';
+    $scope.sprint[1].goal = 'Release working web application and Chrome plugin';
 
     $scope.data = {};
     $scope.data.currentPage = 1; //Inserire il numero di sprint corrente
@@ -71,14 +71,14 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     };
 
     var setCurrentTeamStories = function setCurrentTeamStories() {
-        $scope.currentDavide = 'tbd';
-        $scope.currentMdDavide = 'tbd';
+        $scope.currentDavide = 'B06';
+        $scope.currentMdDavide = '0.5';
 
-        $scope.currentAndrea = 'tbd';
-        $scope.currentMdAndrea = 'tbd';
+        $scope.currentAndrea = 'B07';
+        $scope.currentMdAndrea = '3.5';
 
-        $scope.currentUgo = 'tbd';
-        $scope.currentMdUgo = 'tbd';
+        $scope.currentUgo = 'S16';
+        $scope.currentMdUgo = '3';
     };
 
     var resetMdays = function resetMdays() {
