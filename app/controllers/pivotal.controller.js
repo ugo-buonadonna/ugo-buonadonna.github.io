@@ -47,7 +47,7 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[1].andreaMandays = 6.5;
     $scope.sprint[1].davideMandays = 7;
     $scope.sprint[1].availableTeamMandays = $scope.sprint[1].ugoMandays + $scope.sprint[1].andreaMandays + $scope.sprint[1].davideMandays;
-    $scope.sprint[1].goal = 'Release working web application and Chrome plugin';
+    $scope.sprint[1].goal = 'Release web application and Chrome plugin';
     $scope.sprint[1].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[1].nextDemoDay, $scope.sprint[1].teamMembers);
 
     console.log('REMANING MD: ' + $scope.sprint[1].remainingMandays);
