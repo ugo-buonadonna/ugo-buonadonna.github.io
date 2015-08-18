@@ -39,6 +39,7 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[0].davideMandays = 7;
     $scope.sprint[0].availableTeamMandays = $scope.sprint[0].ugoMandays + $scope.sprint[0].andreaMandays + $scope.sprint[0].davideMandays;
     $scope.sprint[0].goal = 'Analyze market needs to find right target';
+
     // -------------------------------------
     $scope.sprint[1].nextDemoDay = new Date('08/27/2015');
     $scope.sprint[1].teamMembers = 3;
@@ -47,7 +48,9 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[1].davideMandays = 7;
     $scope.sprint[1].availableTeamMandays = $scope.sprint[1].ugoMandays + $scope.sprint[1].andreaMandays + $scope.sprint[1].davideMandays;
     $scope.sprint[1].goal = 'Release working web application and Chrome plugin';
+    $scope.sprint[1].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[1].nextDemoDay, $scope.sprint[1].teamMembers);
 
+    console.log('REMANING MD: ' + $scope.sprint[1].remainingMandays);
     $scope.data = {};
     $scope.data.currentPage = 1; //Inserire il numero di sprint corrente
 
@@ -169,9 +172,10 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
             calculateData(currentIteration);
         });
         if ($scope.data.currentPage == $scope.allIterations.length) {
-            $scope.setRemainingMandays($scope.allIterations.length);
+            //$scope.setRemainingMandays($scope.allIterations.length);
             setCurrentTeamStories();
         } else resetMdays();
+        //$scope.setRemainingMandays($scope.data.currentPage);
         $scope.storyDemo = undefined;
         $scope.tasks = undefined;
     };
