@@ -23,11 +23,22 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[1].davideMandays = 7;
     $scope.sprint[1].availableTeamMandays = $scope.sprint[1].ugoMandays + $scope.sprint[1].andreaMandays + $scope.sprint[1].davideMandays;
     $scope.sprint[1].goal = 'Release web application and Chrome plugin';
-    $scope.sprint[1].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[1].nextDemoDay,$scope.sprint[1].teamMembers);
 
-    console.log(`REMANING MD: ${$scope.sprint[1].remainingMandays}`);
+
+    // -------------------------------------
+    $scope.sprint[2].nextDemoDay = new Date('09/10/2015');
+    $scope.sprint[2].teamMembers = 3;
+    $scope.sprint[2].ugoMandays = 3;
+    $scope.sprint[2].andreaMandays = 3;
+    $scope.sprint[2].davideMandays = 3;
+    $scope.sprint[2].availableTeamMandays = $scope.sprint[2].ugoMandays + $scope.sprint[2].andreaMandays + $scope.sprint[2].davideMandays;
+    $scope.sprint[2].goal = 'Reach another two early adopter sites';
+    $scope.sprint[2].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[2].nextDemoDay,$scope.sprint[2].teamMembers);
+
+
+    console.log(`REMANING MD: ${$scope.sprint[2].remainingMandays}`);
     $scope.data = {};
-    $scope.data.currentPage = 1;         //Inserire il numero di sprint corrente
+    $scope.data.currentPage = 3;         //Inserire il numero di sprint corrente
 
     //console.log(`AOOO ${ $scope.sprint[$scope.currentPage-1].availableTeamMandays}`)
 
