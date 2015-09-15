@@ -56,12 +56,21 @@ app.controller('PivotalTrackerCtrl', ['$scope', '$http', 'PivotalTracker', funct
     $scope.sprint[2].andreaMandays = 3;
     $scope.sprint[2].davideMandays = 3;
     $scope.sprint[2].availableTeamMandays = $scope.sprint[2].ugoMandays + $scope.sprint[2].andreaMandays + $scope.sprint[2].davideMandays;
-    $scope.sprint[2].goal = 'Reach another two early adopter sites';
-    $scope.sprint[2].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[2].nextDemoDay, $scope.sprint[2].teamMembers);
+    $scope.sprint[2].goal = 'New York trip';
 
-    console.log('REMANING MD: ' + $scope.sprint[2].remainingMandays);
+    // -------------------------------------
+    $scope.sprint[3].nextDemoDay = new Date('09/24/2015');
+    $scope.sprint[3].teamMembers = 3;
+    $scope.sprint[3].ugoMandays = 6.5;
+    $scope.sprint[3].andreaMandays = 7;
+    $scope.sprint[3].davideMandays = 7;
+    $scope.sprint[3].availableTeamMandays = $scope.sprint[3].ugoMandays + $scope.sprint[3].andreaMandays + $scope.sprint[3].davideMandays;
+    $scope.sprint[3].goal = 'Reach two more early adopter sites';
+    $scope.sprint[3].remainingMandays = PivotalTracker.getRemainingMandays($scope.sprint[3].nextDemoDay, $scope.sprint[3].teamMembers);
+
+    console.log('REMANING MD: ' + $scope.sprint[3].remainingMandays);
     $scope.data = {};
-    $scope.data.currentPage = 3; //Inserire il numero di sprint corrente
+    $scope.data.currentPage = 4; //Inserire il numero di sprint corrente
 
     //console.log(`AOOO ${ $scope.sprint[$scope.currentPage-1].availableTeamMandays}`)
 
